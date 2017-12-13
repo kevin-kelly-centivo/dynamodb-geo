@@ -8,3 +8,4 @@ target/
 gen/
 out/
 .ply/config/deploy.*
+s3-geo/.ply/config/deploy.*
