@@ -1,5 +1,7 @@
 #Geo Library for Amazon DynamoDB
 
+[![Build Status](https://travis-ci.com/Dash-Labs/dynamodb-geo.svg?branch=master)](https://travis-ci.com/Dash-Labs/dynamodb-geo)
+
 This library was forked from the [AWS geo library][geo-library-javadoc].
 
 Following limitations with the aws geo library were the main reasons that necessitated this fork:

@@ -1,0 +1,22 @@
+language: java
+jdk:
+- oraclejdk8
+- openjdk8
+install:
+- mkdir -p $PWD/opt
+- pushd $PWD/opt
+- curl https://s3.amazonaws.com/ply-buildtool/ply.tar | tar xz
+- ply/bin/ply update
+- popd
+env:
+- PLY_HOME=$PWD/opt/ply PATH=$PLY_HOME/bin:$PATH
+script:
+- echo $repogithubuser=$repogithubpwd > $PLY_HOME/config/repogithub.properties
+- echo https://api.github.com/repos/Dash-Labs/hangar51/contents/repo=$repomngrhangar51
+  > $PLY_HOME/config/repomngr.properties
+- ply clean test
+notifications:
+  email:
+  - commiters@dash.by
+  slack:
+    secure: i3uBEAfws8mxQ/eViAmkM5YI+ptmzV8GzFXv3o5whPSKkhLNarE8yo24KawPtmvlMcgwi0gSVjf+TXEOlB3g/lbjW5doB9o73lT89waJ5blMHs+mVQYHJaMk/NwQmkFuJnhDJDK+z7Grc0vsXedkiGoRT5PwDJQvsbmPCTrG5rEOzMSKnyEus3M+r46Ros9CL1MdmLPEC/W26fHKnC3JKwA25nbB6mi8iwkDOIbWZfklsqJPqvQ7LUBN1fyvFLkqmAXnaipDOSludqJL7Wp40DlBA+EewHp96PKhYDaLHiyYzZG9ahhvXwx4X+F1NlC0Kq+tICYG3fi/x0LkJbObUyDEb+9i9ODPvqD528pBaKhxoztlREcbrEQIFqjzLZWGuYNKxRIgbBloUmwUN2MDYH1aA8eaTFznsF5XNvVT9Gf9INGeyDq39jzfuZnfRtqT+ZlDAwSwJEKOUzqW2Q+s+duwAnRzUOwwkh/nKdNSjSmrPgYIl5j252To8G5TjmBfwB+s1X7OvF/vJnTOCykLFp8kaRkSju0Md2HPWNO05TvpOm+0rZFn5pXAF2tQNCcjQ/1+L/wWOgsy4A/zozU3cXKPWi0iHOrn3KFb0d+RSzym8O8n+WXZDDmpyIU0yQHZZneaNIRiDvD7Ufe8/xkEehZ6weBTE4JlotuYOfAN9QA=
