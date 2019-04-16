@@ -7,5 +7,5 @@ target/
 .DS_Store
 gen/
 out/
-.ply/config/deploy.*
-s3-geo/.ply/config/deploy.*
+.ply/config/local.*
+s3-geo/.ply/config/local.*
