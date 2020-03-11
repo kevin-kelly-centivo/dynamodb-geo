@@ -1,0 +1,21 @@
+{
+    "name": "dynamodb-geo-enhanced",
+    "version": "1.0.0",
+    "author": "Kevin Kelly",
+    "license": "MIT",
+    "scripts": {
+        "test": "jest",
+        "delete-locks": "lerna exec -- rm -rf packages-lock.json",
+        "build": "lerna exec -- npm install",
+        "bootstrap": "lerna bootstrap"
+    },
+    "dependencies": {
+        "@types/jest": "24.0.24",
+        "jest": "^25.1.0"
+    },
+    "devDependencies": {
+        "dotenv": "^8.2.0",
+        "lerna": "3.19.0",
+        "eslint": "6.7.2"
+    }
+}
