@@ -140,19 +140,23 @@ const generateHashKey = (geohash, hashKeyLength) => {
  * @return S2LatLngRect
  */
 const getBoundingBoxForRadiusQuery = (lat, long, radius) => {
-    let centerLatLong = new s2.LatLng(lat, long);
-    let latRefUnit = lat > 0.0 ? -1.0 : 1.0;
-    let latRefLatLong = new s2.LatLng(lat + latRefUnit, long);
-    let longRefUnit = long > 0.0 ? -1.0 : 1.0;
-    let longRefLatLong = new s2.LatLng(lat, long + longRefUnit);
+    // let centerLatLong = new s2.LatLng(lat, long);
+    // let latRefUnit = lat > 0.0 ? -1.0 : 1.0;
+    // let latRefLatLong = new s2.LatLng(lat + latRefUnit, long);
+    // let longRefUnit = long > 0.0 ? -1.0 : 1.0;
+    // let longRefLatLong = new s2.LatLng(lat, long + longRefUnit);
 
-    let latForRadius = radius / centerLatLong.getEarthDistance(latRefLatLong);
-    let longForRadius = radius / centerLatLong.getEarthDistance(longRefLatLong);
+    // let latForRadius = radius / centerLatLong.getEarthDistance(latRefLatLong);
+    // let longForRadius = radius / centerLatLong.getEarthDistance(longRefLatLong);
 
-    let minLatLong = new s2.LatLng(lat - latForRadius, long - longForRadius);
-    let maxLatLong = new s2.LatLng(lat + latForRadius, long + longForRadius);
+    // let minLatLong = new s2.LatLng(lat - latForRadius, long - longForRadius);
+    // let maxLatLong = new s2.LatLng(lat + latForRadius, long + longForRadius);
 
-    return new S2LatLngRect(minLatLong, maxLatLong);
+    // return new S2LatLngRect(minLatLong, maxLatLong);
+
+    
+    s2.RegionCoverer.getRadiusCovering(new s2.LatLng(lat, long), radius)
+    return 
 }
 
 /**
