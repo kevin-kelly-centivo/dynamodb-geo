@@ -1,14 +1,14 @@
 const s2 = require('@radarlabs/s2');
 
 /****** METHODS THAT DON'T SEEM TO COME WITH OUR S2 LIB ******/
-exports.FACE_BITS = 3;
-exports.NUM_FACES = 6;
+const FACE_BITS = 3;
+const NUM_FACES = 6;
 // Valid levels: 0..MAX_LEVEL
-exports.MAX_LEVEL = 30;
-exports.POS_BITS = 2 * MAX_LEVEL + 1;
-exports.MAX_SIZE = 1 << MAX_LEVEL;
+const MAX_LEVEL = 30;
+const POS_BITS = 2 * MAX_LEVEL + 1;
+const MAX_SIZE = 1 << MAX_LEVEL;
 // Equivalent to 0xffffffffffffffffL
-exports.MAX_UNSIGNED = -1;
+const MAX_UNSIGNED = -1;
 
 /**
  * @param {*} face int
@@ -25,14 +25,14 @@ exports.MAX_UNSIGNED = -1;
  *   order to give names to the arguments.
  * 
  */
-exports.fromFacePosLevel = (face, pos, level) => {
+const fromFacePosLevel = (face, pos, level) => {
     return (new s2.CellId((face << POS_BITS) + (pos | 1))).parent(level);
 }
 
 /**
  * @param {*} level int
  */
-exports.begin = (level) => {
+const begin = (level) => {
     let child = fromFacePosLevel(0, 0, 0);
     return childBegin(child, level);
 }
@@ -40,7 +40,7 @@ exports.begin = (level) => {
 /**
  * @param {*} level int
  */
-exports.end = (level) => {
+const end = (level) => {
     let child = fromFacePosLevel(5, 0, 0);
     return childEnd(child, level);
 }
@@ -48,7 +48,7 @@ exports.end = (level) => {
 /**
  * @param {*} level int
  */
-exports.childBegin = (cell, level = null) => {
+const childBegin = (cell, level = null) => {
     if (level == null) {
         let oldLsb = lowestOnBit();
         return new s2.CellId(id - oldLsb + (oldLsb >>> 2));
@@ -59,7 +59,7 @@ exports.childBegin = (cell, level = null) => {
 /**
  * @param {*} level int
  */
-exports.childEnd = (cell, level = null) => {
+const childEnd = (cell, level = null) => {
     if (level == null) {
         let oldLsb = lowestOnBit();
         return new s2.CellId(id + oldLsb + (oldLsb >>> 2));
@@ -72,4 +72,18 @@ lowestOnBit = (cell) => {
 }
 lowestOnBitForLevel = (level) => {
     return 1 << (2 * (MAX_LEVEL - level));
+}
+
+module.exports = {
+    FACE_BITS,
+    NUM_FACES,
+    MAX_LEVEL,
+    POS_BITS,
+    MAX_SIZE,
+    MAX_UNSIGNED,
+    fromFacePosLevel,
+    begin,
+    end,
+    childBegin,
+    childEnd
 }
