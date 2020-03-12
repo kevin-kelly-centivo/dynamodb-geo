@@ -154,9 +154,8 @@ const getBoundingBoxForRadiusQuery = (lat, long, radius) => {
 
     // return new S2LatLngRect(minLatLong, maxLatLong);
 
-    
-    s2.RegionCoverer.getRadiusCovering(new s2.LatLng(lat, long), radius)
-    return 
+    // TODO: I think the goal here is completed with this more complex work that is done for us
+    return s2.RegionCoverer.getRadiusCovering(new s2.LatLng(lat, long), radius);
 }
 
 /**
