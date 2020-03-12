@@ -2,6 +2,9 @@
     "name": "@dyanmodb-geo-enhaned/test",
     "main": "index.js",
     "version": "1.0.0",
+    "scripts": {
+        "test": "node -r dotenv/config index.js"
+    },
     "dependencies": {
         "@dyanmodb-geo-enhaned/geo-core": "1.0.0",
         "@dyanmodb-geo-enhaned/s3-geo": "1.0.0",

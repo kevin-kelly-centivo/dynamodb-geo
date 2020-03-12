@@ -140,11 +140,11 @@ const generateHashKey = (geohash, hashKeyLength) => {
  * @return S2LatLngRect
  */
 const getBoundingBoxForRadiusQuery = (lat, long, radius) => {
-    // let centerLatLong = new s2.LatLng(lat, long);
-    // let latRefUnit = lat > 0.0 ? -1.0 : 1.0;
-    // let latRefLatLong = new s2.LatLng(lat + latRefUnit, long);
-    // let longRefUnit = long > 0.0 ? -1.0 : 1.0;
-    // let longRefLatLong = new s2.LatLng(lat, long + longRefUnit);
+    let centerLatLong = new s2.LatLng(lat, long);
+    let latRefUnit = lat > 0.0 ? -1.0 : 1.0;
+    let latRefLatLong = new s2.LatLng(lat + latRefUnit, long);
+    let longRefUnit = long > 0.0 ? -1.0 : 1.0;
+    let longRefLatLong = new s2.LatLng(lat, long + longRefUnit);
 
     // let latForRadius = radius / centerLatLong.getEarthDistance(latRefLatLong);
     // let longForRadius = radius / centerLatLong.getEarthDistance(longRefLatLong);
@@ -155,7 +155,20 @@ const getBoundingBoxForRadiusQuery = (lat, long, radius) => {
     // return new S2LatLngRect(minLatLong, maxLatLong);
 
     // TODO: I think the goal here is completed with this more complex work that is done for us
-    return s2.RegionCoverer.getRadiusCovering(new s2.LatLng(lat, long), radius);
+    console.log(lat, long, centerLatLong.toString())
+    let cellUnion = s2.RegionCoverer.getRadiusCovering(centerLatLong, radius, {
+        // min level
+        min: 10,
+        // max level
+        max: 20,
+        // max cells
+        max_cells: 20
+    });
+    let cellIds = cellUnion.cellIds();
+    for(let i = 0; i < cellIds.length; i++ ) {
+        console.log(cellIds[i].isLeaf());
+    }
+    return cellUnion;
 }
 
 /**
@@ -169,7 +182,7 @@ const getBoundingBoxForRadiusQuery = (lat, long, radius) => {
 const getBoundingBoxForRectangleQuery = (minLat, minLong, maxLat, maxLong) => {
     let minLatLong = new s2.LatLng(minLat, minLong);
     let maxLatLong = new s2.LatLng(maxLat, maxLong);
-    return new S2LatLngRect(minLatLong, maxLatLong);
+    return new s2.LatLng(minLatLong, maxLatLong);
 }
 
 module.exports = {
