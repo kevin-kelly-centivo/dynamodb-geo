@@ -116,6 +116,7 @@ const generateGeohash = (lat, long) => {
  * @return long
  */
 const generateHashKey = (geohash, hashKeyLength) => {
+    console.log("GEOHASH:", geohash)
     if (geohash < 0) {
         // Counteract "-" at beginning of geohash.
         hashKeyLength++;
