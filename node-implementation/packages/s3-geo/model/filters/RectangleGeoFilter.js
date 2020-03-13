@@ -1,10 +1,9 @@
 const s2 = require("nodes2ts");
 module.exports = class RadiusGeoFilter {
-    constructor(extractor, latLongRect) {
-        if (extractor == null || latLong == null) {
+    constructor(latLongRect) {
+        if (latLong == null) {
             throw new Error("RADIUS GEO FILTER ERROR NULL VALUE");
         }
-        this.extractor = extractor;
         this.latLongRect = latLongRect;
     }
 
@@ -14,8 +13,8 @@ module.exports = class RadiusGeoFilter {
     filter(items) {
         let result = [];
         for (let item of items) {
-            let lat = this.extractor.extractLatitude(item);
-            let long = this.extractor.extractLongitude(item);
+            let lat = item.lat;
+            let long = item.long;
             if (lat != null && long != null) {
                 let latLong = s2.S2LatLng.fromDegrees(lat, long);
                 if (this.latLongRect.contains(latLong)) {
