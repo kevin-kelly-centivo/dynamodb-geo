@@ -1,11 +1,11 @@
 {
-    "name": "@dyanmodb-geo-enhaned/geo-core",
+    "name": "@dyanmodb-geo-enhanced/geo-core",
     "main": "index.js",
     "version": "1.0.0",
     "dependencies": {
         "aws-sdk": "2.565.0",
         "@radarlabs/s2": "0.0.3",
-        "@dyanmodb-geo-enhaned/s2-library-utils": "1.0.0"
+        "@dyanmodb-geo-enhanced/s2-library-utils": "1.0.0"
     },
     "devDependencies": {
         "dotenv": "8.2.0"

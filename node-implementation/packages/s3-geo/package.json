@@ -1,5 +1,5 @@
 {
-    "name": "@dyanmodb-geo-enhaned/s3-geo",
+    "name": "@dyanmodb-geo-enhanced/s3-geo",
     "main": "index.js",
     "version": "1.0.0",
     "dependencies": {
