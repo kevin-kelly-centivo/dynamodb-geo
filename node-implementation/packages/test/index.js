@@ -24,4 +24,4 @@ console.log(geohash);
 let hashKey = s2Manager.generateHashKey(geohash, 10);
 console.log(hashKey);
 
-console.log(s2Manager.getBoundingBoxForRadiusQuery(lat, long, 20));
+// console.log(s2Manager.getBoundingBoxForRadiusQuery(lat, long, 20));

@@ -106,7 +106,7 @@ const processChildren = (parent, latLongRect, queue, cellIds) => {
 const generateGeohash = (lat, long) => {
     let latLong = s2.S2LatLng.fromDegrees(lat, long);
     let cell = s2.S2Cell.fromLatLng(latLong)
-    return cell.id;
+    return cell.id.id;
 }
 
 /**
@@ -116,7 +116,6 @@ const generateGeohash = (lat, long) => {
  * @return long
  */
 const generateHashKey = (geohash, hashKeyLength) => {
-    console.log("GEOHASH:", geohash)
     if (geohash < 0) {
         // Counteract "-" at beginning of geohash.
         hashKeyLength++;
