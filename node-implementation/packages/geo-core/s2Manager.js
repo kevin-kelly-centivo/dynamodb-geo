@@ -1,6 +1,5 @@
 const assert = require('assert').strict;
-const s2 = require('@radarlabs/s2');
-const s2CellUtils = require('@dyanmodb-geo-enhaned/s2-library-utils').s2CellUtils;
+const s2 = require("nodes2ts");
 
 /**
  * @param {*} latLongRect S2LatLngRect
@@ -11,7 +10,7 @@ const findCellIds = (latLongRect) => {
     // ArrayList<S2CellId>
     let cellIds = [];
 
-    for (let c = s2CellUtils.begin(0); !c.equals(s2CellUtils.end(0)); c = c.next()) {
+    for (let c = s2.S2CellId.begin(0); !c.equals(s2.S2CellId.end(0)); c = c.next()) {
         if (containsGeodataToFind(c, latLongRect)) {
             queue.push(c);
         }
@@ -22,7 +21,8 @@ const findCellIds = (latLongRect) => {
     queue = null;
 
     if (cellIds.length > 0) {
-        let cellUnion = new s2.CellUnion(cellIds);
+        let cellUnion = new s2.S2CellUnion();
+        cellUnion.initFromIds(cellIds);
         cellIds = null;
         return cellUnion;
     }
@@ -35,7 +35,7 @@ const findCellIds = (latLongRect) => {
  */
 const containsGeodataToFind = (cellId, latLongRect) => {
     if (latLongRect != null) {
-        return latLongRect.intersects(new s2.Cell(cellId));
+        return latLongRect.intersects(new s2.S2Cell(cellId));
     }
     return false;
 }
@@ -63,7 +63,7 @@ const processQueue = (queue, cellIds, latLongRect) => {
 const processChildren = (parent, latLongRect, queue, cellIds) => {
     // new ArrayList<S2CellId>(4)
     let children = [];
-    for (let c = s2CellUtils.childBegin(parent); !c.equals(s2CellUtils.childEnd(parent)); c = c.next()) {
+    for (let c = parent.childBegin(); !c.equals(parent.childEnd()); c = c.next()) {
         if (containsGeodataToFind(c, latLongRect)) {
             children.push(c);
         }
@@ -103,11 +103,9 @@ const processChildren = (parent, latLongRect, queue, cellIds) => {
  * @return long
  */
 const generateGeohash = (lat, long) => {
-    let latLong = new s2.LatLng(lat, long);
-    let cellId = new s2.CellId(latLong);
-    // TODO: not needed I dont think
-    // let cellId = cell.id(); 
-    return cellId.id();
+    let latLong = s2.S2LatLng.fromDegrees(lat, long);
+    let cell = new s2.S2Cell(latLong);
+    return cell.id();
 }
 
 /**
@@ -140,35 +138,19 @@ const generateHashKey = (geohash, hashKeyLength) => {
  * @return S2LatLngRect
  */
 const getBoundingBoxForRadiusQuery = (lat, long, radius) => {
-    let centerLatLong = new s2.LatLng(lat, long);
+    let centerLatLong = new s2.S2LatLng(lat, long);
     let latRefUnit = lat > 0.0 ? -1.0 : 1.0;
-    let latRefLatLong = new s2.LatLng(lat + latRefUnit, long);
+    let latRefLatLong = new s2.S2LatLng(lat + latRefUnit, long);
     let longRefUnit = long > 0.0 ? -1.0 : 1.0;
-    let longRefLatLong = new s2.LatLng(lat, long + longRefUnit);
+    let longRefLatLong = new s2.S2LatLng(lat, long + longRefUnit);
 
-    // let latForRadius = radius / centerLatLong.getEarthDistance(latRefLatLong);
-    // let longForRadius = radius / centerLatLong.getEarthDistance(longRefLatLong);
+    let latForRadius = radius / centerLatLong.getEarthDistance(latRefLatLong);
+    let longForRadius = radius / centerLatLong.getEarthDistance(longRefLatLong);
 
-    // let minLatLong = new s2.LatLng(lat - latForRadius, long - longForRadius);
-    // let maxLatLong = new s2.LatLng(lat + latForRadius, long + longForRadius);
+    let minLatLong = new s2.S2LatLng(lat - latForRadius, long - longForRadius);
+    let maxLatLong = new s2.S2LatLng(lat + latForRadius, long + longForRadius);
 
-    // return new S2LatLngRect(minLatLong, maxLatLong);
-
-    // TODO: I think the goal here is completed with this more complex work that is done for us
-    console.log(lat, long, centerLatLong.toString())
-    let cellUnion = s2.RegionCoverer.getRadiusCovering(centerLatLong, radius, {
-        // min level
-        min: 10,
-        // max level
-        max: 20,
-        // max cells
-        max_cells: 20
-    });
-    let cellIds = cellUnion.cellIds();
-    for(let i = 0; i < cellIds.length; i++ ) {
-        console.log(cellIds[i].isLeaf());
-    }
-    return cellUnion;
+    return new s2.S2LatLngRect(minLatLong, maxLatLong);
 }
 
 /**
@@ -180,9 +162,9 @@ const getBoundingBoxForRadiusQuery = (lat, long, radius) => {
  * @return S2LatLngRect
  */
 const getBoundingBoxForRectangleQuery = (minLat, minLong, maxLat, maxLong) => {
-    let minLatLong = new s2.LatLng(minLat, minLong);
-    let maxLatLong = new s2.LatLng(maxLat, maxLong);
-    return new s2.LatLng(minLatLong, maxLatLong);
+    let minLatLong = new s2.S2LatLng(minLat, minLong);
+    let maxLatLong = new s2.S2LatLng(maxLat, maxLong);
+    return new s2.S2LatLng(minLatLong, maxLatLong);
 }
 
 module.exports = {

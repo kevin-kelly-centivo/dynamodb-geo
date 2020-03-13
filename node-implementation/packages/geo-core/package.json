@@ -5,6 +5,7 @@
     "dependencies": {
         "aws-sdk": "2.565.0",
         "@radarlabs/s2": "0.0.3",
+        "nodes2ts": "2.0.0",
         "@dyanmodb-geo-enhanced/s2-library-utils": "1.0.0"
     },
     "devDependencies": {

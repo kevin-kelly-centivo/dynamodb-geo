@@ -3,7 +3,8 @@
     "main": "index.js",
     "version": "1.0.0",
     "dependencies": {
-        "@radarlabs/s2": "0.0.3"
+        "@radarlabs/s2": "0.0.3",
+        "nodes2ts": "2.0.0"
     },
     "devDependencies": {
         "dotenv": "8.2.0"
