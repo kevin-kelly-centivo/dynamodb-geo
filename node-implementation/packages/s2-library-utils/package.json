@@ -3,8 +3,7 @@
     "main": "index.js",
     "version": "1.0.0",
     "dependencies": {
-        "@radarlabs/s2": "0.0.3",
-        "@mapbox/s2": "0.5.1"
+        "@radarlabs/s2": "0.0.3"
     },
     "devDependencies": {
         "dotenv": "8.2.0"
