@@ -17,12 +17,12 @@ const findCellIds = (latLongRect) => {
     }
 
     processQueue(queue, cellIds, latLongRect);
-    assert.equal(queue.size(), 0);
+    assert.equal(queue.length, 0);
     queue = null;
 
     if (cellIds.length > 0) {
         let cellUnion = new s2.S2CellUnion();
-        cellUnion.initFromIds(cellIds);
+        cellUnion.initRawCellIds(cellIds);
         cellIds = null;
         return cellUnion;
     }
@@ -46,7 +46,8 @@ const containsGeodataToFind = (cellId, latLongRect) => {
  * @param {*} latLongRect S2LatLngRect
  */
 const processQueue = (queue, cellIds, latLongRect) => {
-    for (let c = queue.poll(); c != null; c = queue.poll()) {
+    // TODO: might have to implement an actual queue, right now using array as FIFO
+    for (let c = queue.shift(); c != null; c = queue.shift()) {
         if (!c.isValid()) {
             break;
         }
@@ -104,8 +105,8 @@ const processChildren = (parent, latLongRect, queue, cellIds) => {
  */
 const generateGeohash = (lat, long) => {
     let latLong = s2.S2LatLng.fromDegrees(lat, long);
-    let cell = new s2.S2Cell(latLong);
-    return cell.id();
+    let cell = s2.S2Cell.fromLatLng(latLong)
+    return cell.id;
 }
 
 /**
@@ -138,17 +139,17 @@ const generateHashKey = (geohash, hashKeyLength) => {
  * @return S2LatLngRect
  */
 const getBoundingBoxForRadiusQuery = (lat, long, radius) => {
-    let centerLatLong = new s2.S2LatLng(lat, long);
+    let centerLatLong = s2.S2LatLng.fromDegrees(lat, long);
     let latRefUnit = lat > 0.0 ? -1.0 : 1.0;
-    let latRefLatLong = new s2.S2LatLng(lat + latRefUnit, long);
+    let latRefLatLong = s2.S2LatLng.fromDegrees(lat + latRefUnit, long);
     let longRefUnit = long > 0.0 ? -1.0 : 1.0;
-    let longRefLatLong = new s2.S2LatLng(lat, long + longRefUnit);
+    let longRefLatLong = s2.S2LatLng.fromDegrees(lat, long + longRefUnit);
 
     let latForRadius = radius / centerLatLong.getEarthDistance(latRefLatLong);
     let longForRadius = radius / centerLatLong.getEarthDistance(longRefLatLong);
 
-    let minLatLong = new s2.S2LatLng(lat - latForRadius, long - longForRadius);
-    let maxLatLong = new s2.S2LatLng(lat + latForRadius, long + longForRadius);
+    let minLatLong = s2.S2LatLng.fromDegrees(lat - latForRadius, long - longForRadius);
+    let maxLatLong = s2.S2LatLng.fromDegrees(lat + latForRadius, long + longForRadius);
 
     return new s2.S2LatLngRect(minLatLong, maxLatLong);
 }
