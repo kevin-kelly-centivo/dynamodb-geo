@@ -1,0 +1,1 @@
+const s2Manager = require('./s2Manager');

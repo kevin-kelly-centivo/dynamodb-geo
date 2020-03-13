@@ -6,7 +6,6 @@
         "test": "node -r dotenv/config index.js"
     },
     "dependencies": {
-        "@dyanmodb-geo-enhanced/geo-core": "1.0.0",
         "@dyanmodb-geo-enhanced/s3-geo": "1.0.0",
         "@dyanmodb-geo-enhanced/s2-library-utils": "1.0.0",
         "nodes2ts": "2.0.0"

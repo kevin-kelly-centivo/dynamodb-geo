@@ -1,5 +1,5 @@
 const s2 = require("nodes2ts");
-const s2Manager = require('@dyanmodb-geo-enhanced/geo-core/s2Manager');
+const s2Manager = require('@dyanmodb-geo-enhanced/s3-geo').s2Manager;
 
 let box = {
     minPoint: { lat: 35.26400806942025, lon: -80.3674660285877 },
