@@ -74,20 +74,20 @@ module.exports = class GeohashRange {
     trySplit(hashKeyLength, s2Manager) {
         let result = [];
 
-        let minHashKey = s2Manager.generateHashKey(rangeMin, hashKeyLength);
-        let maxHashKey = s2Manager.generateHashKey(rangeMax, hashKeyLength);
-        let denominator = Math.pow(10, rangeMin.toString().length - minHashKey.toString().length);
+        let minHashKey = s2Manager.generateHashKey(this.rangeMin, hashKeyLength);
+        let maxHashKey = s2Manager.generateHashKey(this.rangeMax, hashKeyLength);
+        let denominator = Math.pow(10, this.rangeMin.toString().length - minHashKey.toString().length);
 
         if (minHashKey == maxHashKey) {
             result.push(this);
         } else {
             for (let l = minHashKey; l <= maxHashKey; l++) {
                 if (l > 0) {
-                    result.push(new GeohashRange(l == minHashKey ? rangeMin : l * denominator,
-                        l == maxHashKey ? rangeMax : (l + 1) * denominator - 1));
+                    result.push(new GeohashRange(l == minHashKey ? this.rangeMin : l * denominator,
+                        l == maxHashKey ? this.rangeMax : (l + 1) * denominator - 1));
                 } else {
-                    result.push(new GeohashRange(l == minHashKey ? rangeMin : (l - 1) * denominator + 1,
-                        l == maxHashKey ? rangeMax : l * denominator));
+                    result.push(new GeohashRange(l == minHashKey ? this.rangeMin : (l - 1) * denominator + 1,
+                        l == maxHashKey ? this.rangeMax : l * denominator));
                 }
             }
         }

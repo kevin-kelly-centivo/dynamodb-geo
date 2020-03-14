@@ -151,7 +151,7 @@ const getBoundingBoxForRadiusQuery = (lat, long, radius) => {
     let minLatLong = s2.S2LatLng.fromDegrees(lat - latForRadius, long - longForRadius);
     let maxLatLong = s2.S2LatLng.fromDegrees(lat + latForRadius, long + longForRadius);
 
-    return new s2.S2LatLngRect(minLatLong, maxLatLong);
+    return  s2.S2LatLngRect.fromLatLng(minLatLong, maxLatLong);
 }
 
 /**
@@ -163,9 +163,9 @@ const getBoundingBoxForRadiusQuery = (lat, long, radius) => {
  * @return S2LatLngRect
  */
 const getBoundingBoxForRectangleQuery = (minLat, minLong, maxLat, maxLong) => {
-    let minLatLong = new s2.S2LatLng(minLat, minLong);
-    let maxLatLong = new s2.S2LatLng(maxLat, maxLong);
-    return new s2.S2LatLng(minLatLong, maxLatLong);
+    let minLatLong = s2.S2LatLng.fromDegrees(minLat, minLong);
+    let maxLatLong = s2.S2LatLng.fromDegrees(maxLat, maxLong);
+    return s2.S2LatLngRect.fromLatLng(minLatLong, maxLatLong);
 }
 
 module.exports = {

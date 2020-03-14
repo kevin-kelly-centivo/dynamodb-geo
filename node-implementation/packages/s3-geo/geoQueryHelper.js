@@ -1,4 +1,5 @@
 const s2Manager = require('./s2Manager');
+const { GeohashRange, GeoProperties } = require('./model');
 
 /**
  * Merge continuous cells in cellUnion and return a list of merged GeohashRanges.
@@ -7,13 +8,13 @@ const s2Manager = require('./s2Manager');
  * @return A list of merged GeohashRanges.
  */
 const mergeCells = (cellUnion) => {
-    let cellIds = cellUnion.cellIds();
-    if (cellIds.size() > 1000) {
+    let cellIds = cellUnion.getCellIds();
+    if (cellIds.length > 1000) {
         console.log(`Created ${cellIds.length} cell ids`);
     }
     let ranges = [];
     for (let c of cellIds) {
-        let range = new GeohashRange(c.rangeMin().id(), c.rangeMax().id());
+        let range = new GeohashRange(c.rangeMin().id, c.rangeMax().id);
         let wasMerged = false;
         for (let r of ranges) {
             if (r.tryMerge(range)) {
@@ -22,7 +23,7 @@ const mergeCells = (cellUnion) => {
             }
         }
         if (!wasMerged) {
-            ranges.add(range);
+            ranges.push(range);
         }
     }
     return ranges;
@@ -56,8 +57,8 @@ const generateGeoProperties = (boundingBox, hashKeyLength) => {
     for (let outerRange of outerRanges) {
         let geohashRanges = outerRange.trySplit(hashKeyLength, s2Manager);
         for (let range of geohashRanges) {
-            let geoHashKey = s2Manager.generateHashKey(range.getRangeMin(), hashKeyLength);
-            queryRequests.push(new GeoProperties(hashKeyLength, geoHashKey, range.getRangeMin(), range.getRangeMax()));
+            let geoHashKey = s2Manager.generateHashKey(range.rangeMin, hashKeyLength);
+            queryRequests.push(GeoProperties(hashKeyLength, geoHashKey, range.rangeMin, range.rangeMax));
         }
     }
     // to return new deep copy of this JSON stringify json parse return
