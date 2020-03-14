@@ -18,17 +18,20 @@ let long = -78.7703;
 //     s2.S2LatLng.fromDegrees(box.maxPoint.lat, box.maxPoint.lon));
 // console.log(s2Manager.findCellIds(s2LatLongRect));
 
-// let geohash = s2Manager.generateGeohash(lat, long);
-// console.log(geohash);
+let geohash = s2Manager.generateGeohash(lat, long);
+console.log(geohash);
 
-// let hashKey = s2Manager.generateHashKey(geohash, 10);
-// console.log(hashKey);
+let hashKey = s2Manager.generateHashKey(geohash, 4);
+console.log(hashKey);
 
-// console.log(s2Manager.getBoundingBoxForRadiusQuery(lat, long, 20));
-// console.log(s2Manager.getBoundingBoxForRectangleQuery(box.minPoint.lat, box.minPoint.long, box.maxPoint.lat, box.maxPoint.long));
+console.log(s2Manager.getBoundingBoxForRadiusQuery(lat, long, 20));
+console.log(s2Manager.getBoundingBoxForRectangleQuery(box.minPoint.lat, box.minPoint.long, box.maxPoint.lat, box.maxPoint.long));
 
-// let geoRadiusProps = geo.generatePropertiesForRadiusQuery(10, lat, long, 20);
-// console.log(geoRadiusProps);
+let geoRadiusProps = geo.generatePropertiesForRadiusQuery(4, lat, long, 20);
+console.log(geoRadiusProps);
 
-let geoRectProps = geo.generatePropertiesForRectangleQuery(10, box.minPoint.lat, box.minPoint.long, box.maxPoint.lat, box.maxPoint.long);
+let geoRectProps = geo.generatePropertiesForRectangleQuery(4, box.minPoint.lat, box.minPoint.long, box.maxPoint.lat, box.maxPoint.long);
 console.log(geoRectProps);
+
+let geoProperties = geo.getGeoProperties(4, lat, long);
+console.log(geoProperties);
