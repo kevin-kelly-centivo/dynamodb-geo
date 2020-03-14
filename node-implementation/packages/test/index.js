@@ -1,4 +1,3 @@
-const s2 = require("nodes2ts");
 const { s2Manager, geo, geoQueryHelper } = require('@dyanmodb-geo-enhanced/s3-geo');
 
 let box = {
