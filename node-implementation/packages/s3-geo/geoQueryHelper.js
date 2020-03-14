@@ -53,7 +53,7 @@ const generateGeoProperties = (boundingBox, hashKeyLength) => {
     let outerRanges = getGeoHashRanges(boundingBox);
     let queryRequests = [];
 
-    //Create multiple queries based on the geo ranges derived from the bounding box
+    // Create multiple queries based on the geo ranges derived from the bounding box
     for (let outerRange of outerRanges) {
         let geohashRanges = outerRange.trySplit(hashKeyLength, s2Manager);
         for (let range of geohashRanges) {

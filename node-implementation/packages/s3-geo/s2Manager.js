@@ -151,7 +151,7 @@ const getBoundingBoxForRadiusQuery = (lat, long, radius) => {
     let minLatLong = s2.S2LatLng.fromDegrees(lat - latForRadius, long - longForRadius);
     let maxLatLong = s2.S2LatLng.fromDegrees(lat + latForRadius, long + longForRadius);
 
-    return  s2.S2LatLngRect.fromLatLng(minLatLong, maxLatLong);
+    return s2.S2LatLngRect.fromLatLng(minLatLong, maxLatLong);
 }
 
 /**

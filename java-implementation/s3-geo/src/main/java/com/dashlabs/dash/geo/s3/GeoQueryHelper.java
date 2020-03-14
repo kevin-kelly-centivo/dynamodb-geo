@@ -36,7 +36,7 @@ public class GeoQueryHelper extends AbstractGeoQueryHelper {
     public List<GeoProperties> generateGeoProperties(S2LatLngRect boundingBox, int hashKeyLength) {
         List<GeohashRange> outerRanges = getGeoHashRanges(boundingBox);
         List<GeoProperties> queryRequests = new ArrayList<GeoProperties>(outerRanges.size());
-        //Create multiple queries based on the geo ranges derived from the bounding box
+        // Create multiple queries based on the geo ranges derived from the bounding box
         for (GeohashRange outerRange : outerRanges) {
             List<GeohashRange> geohashRanges = outerRange.trySplit(hashKeyLength, s2Manager);
             for (GeohashRange range : geohashRanges) {

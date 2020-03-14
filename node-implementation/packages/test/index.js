@@ -2,8 +2,8 @@ const s2 = require("nodes2ts");
 const { s2Manager, geo, geoQueryHelper } = require('@dyanmodb-geo-enhanced/s3-geo');
 
 let box = {
-    minPoint: { lat: 35.26400806942025, lon: -80.3674660285877 },
-    maxPoint: { lat: 36.16334513057974, lon: -79.2598319714123 }
+    minPoint: { lat: 42.3654830956, long: -79.6339240663 },
+    maxPoint: { lat: 43.2018233349, long: -77.8713694208 }
 }
 
 // buffalo
@@ -24,11 +24,11 @@ let long = -78.7703;
 // let hashKey = s2Manager.generateHashKey(geohash, 10);
 // console.log(hashKey);
 
-console.log(s2Manager.getBoundingBoxForRadiusQuery(lat, long, 20));
-console.log(s2Manager.getBoundingBoxForRectangleQuery(box.minPoint.lat, box.minPoint.long, box.maxPoint.lat, box.maxPoint.long));
+// console.log(s2Manager.getBoundingBoxForRadiusQuery(lat, long, 20));
+// console.log(s2Manager.getBoundingBoxForRectangleQuery(box.minPoint.lat, box.minPoint.long, box.maxPoint.lat, box.maxPoint.long));
 
-let geoRadiusProps = geo.generatePropertiesForRadiusQuery(10, lat, long, 20);
-console.log(geoRadiusProps);
+// let geoRadiusProps = geo.generatePropertiesForRadiusQuery(10, lat, long, 20);
+// console.log(geoRadiusProps);
 
 let geoRectProps = geo.generatePropertiesForRectangleQuery(10, box.minPoint.lat, box.minPoint.long, box.maxPoint.lat, box.maxPoint.long);
 console.log(geoRectProps);
