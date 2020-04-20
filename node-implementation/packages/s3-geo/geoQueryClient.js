@@ -40,3 +40,6 @@ const executeQuery = async (queryRequest, resultFilter) => {
         queryRequest = queryRequest.withExclusiveStartKey(queryResult.getLastEvaluatedKey());
     } while ((queryResult.getLastEvaluatedKey() != null));
 }
+module.exports = {
+    execute
+}
