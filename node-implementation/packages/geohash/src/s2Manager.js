@@ -1,4 +1,5 @@
 const assert = require('assert').strict;
+const Decimal = require('decimal.js').default;
 const s2 = require("nodes2ts");
 
 /**
@@ -105,30 +106,32 @@ const processChildren = (parent, latLongRect, queue, cellIds) => {
  */
 const generateGeohash = (lat, long) => {
     let latLong = s2.S2LatLng.fromDegrees(lat, long);
-    let cell = s2.S2Cell.fromLatLng(latLong)
+    let cell = s2.S2Cell.fromLatLng(latLong);
     return cell.id.id;
 }
 
 /**
- * @param {*} geohash long
+ * @param {*} geohash long --> Decimal or string of geohash
  * @param {*} hashKeyLength int
  * 
- * @return long
+ * @return long --> Decimal
  */
 const generateHashKey = (geohash, hashKeyLength) => {
-    if (geohash < 0) {
+    geohash = new Decimal(geohash.toString());
+    if (geohash.lessThan(new Decimal(0))) {
         // Counteract "-" at beginning of geohash.
         hashKeyLength++;
     }
 
     let geohashString = geohash.toString();
-    let denominator = Math.pow(10, geohashString.length - hashKeyLength);
+    let denominator = Decimal.pow(10, geohashString.length - hashKeyLength);
 
     //  can happen if geohashString.length() < geohash. Querying with a lat/lng of 0.0 can create this situation.
     if (denominator == 0) {
         return geohash;
     }
-    return geohash / denominator;
+    // trunc happens in other lib from up to decimal length
+    return Decimal.trunc(geohash.dividedBy(denominator.toString()));
 }
 
 /**

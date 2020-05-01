@@ -2,6 +2,9 @@ const aws = require('aws-sdk');
 aws.config.update({ region: process.env.AWS_REGION || 'us-east-1' });
 const ddb = new aws.DynamoDB.DocumentClient();
 
+// DATA UTILS IS WHERE YOU SHOULD LOOK FOR NOW
+// TODO: THIS IS IMPLEMENATION DETAIL RIGHT NOW, FINISH ABSTRACTING CLIENT TO FIT MANY NEEDS
+
 /**
  * A convenience method that executes the <code>queryRequests</code> 
  *  and applies the <code>resultFilter</code> to the query results.
@@ -30,6 +33,7 @@ const executeQuery = async (queryRequest, resultFilter) => {
     // List <Map <String, AttributeValue>>
     let resultItems = [];
 
+    // TODO: THIS CAN BE REPLACED BY LOOP QUERY UTIL I HAVE dataUtils.loopDdbQuery()
     do {
         queryResult = ddb.query(queryRequest);
         // List <Map <String, AttributeValue>>

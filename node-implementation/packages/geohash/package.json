@@ -1,10 +1,11 @@
 {
-    "name": "@dyanmodb-geo-enhanced/s3-geo",
+    "name": "geohash",
     "main": "index.js",
     "version": "1.0.0",
     "dependencies": {
         "aws-sdk": "2.565.0",
-        "nodes2ts": "2.0.0"
+        "nodes2ts": "2.0.0",
+        "decimal.js": "10.2.0"
     },
     "devDependencies": {
         "dotenv": "8.2.0"
